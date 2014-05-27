@@ -21,18 +21,18 @@ class Peak {
     std::list< SortedMatches::iterator > matches;
 public:
     int get_chromStart(){
-	return this->chromStart;
+	return chromStart;
     }
     int get_chromEnd(){
-	return this->chromEnd;
+	return chromEnd;
     }
     int get_track(){
-	return this->track;
+	return track;
     }
-    Peak(int chromStart, int chromEnd, int track){
-	this->chromStart = chromStart;
-	this->chromEnd = chromEnd;
-	this->track = track;
+    Peak(int s, int e, int t){
+	chromStart = s;
+	chromEnd = e;
+	track = t;
     }
 };
 
@@ -51,12 +51,12 @@ public:
 	int peak_list_chromEnd = 0;
     }
     int get_chromEnd(){
-	return this->peak_list_chromEnd;
+	return peak_list_chromEnd;
     }
     int add_peak(Peak *peak){
 	PeakList::iterator peak_it;
-	this->peak_list.push_front(peak);
-	peak_it = this->peak_list.begin();
+	peak_list.push_front(peak);
+	peak_it = peak_list.begin();
 	if(peak_list_chromEnd < peak->get_chromEnd()){
 	    peak_list_chromEnd = peak->get_chromEnd();
 	}
@@ -76,11 +76,53 @@ public:
     }
     void add_match(PeakList::iterator last_it, PeakList::iterator peak_it){
 	if(last_it == peak_list.end()){
+	    return; // there is no previous peak in this group.
 	}
+	int Union, Intersection, leftEnd, rightEnd;
+	if(peak_it->chromEnd < last_it->chromEnd){
+	    rightEnd = last_it->chromEnd;
+	    leftEnd = peak_it->chromEnd;
+	}else{
+	    rightEnd = peak_it->chromEnd;
+	    leftEnd = last_it->chromEnd;
+	}
+	Union = rightEnd - last_it->chromStart;
+	Intersection = leftEnd - peak_it->chromStart;
+	double jaccard = (double)Union/(double)Intersection;
+	Match *match;
+	match = new Match(last_it, peak_it);
+	JaccardMatch jm = JaccardMatch(jaccard, match);
+	sorted_matches.insert(jm);
+	last_it->matches.push_front(match);
+	peak_it->matches.push_front(match);
     }
     void remove_matching(){
-	while(sorted_matches.size()){
+	Match *match;
+	SortedMatches::iterator match_it;
+	while(!sorted_matches.empty()){
+	    match_it = sorted_matches.rbegin();
+	    match = *match_it;
+	    remove_peak(match->one);
+	    remove_peak(match->two);
 	}
+    }
+// http://www.cplusplus.com/reference/list/list/erase/
+// If position (or the range) is valid, list::erase never throws
+// exceptions (no-throw guarantee).
+// Otherwise, it causes undefined behavior.
+    void remove_peak(PeakList::iterator peak_it){
+	SortedMatches::iterator match_it;
+	Match *match;
+	Peak *peak;
+	while(!peak_it->matches.empty()){
+	    match_it = peak_it->matches.begin();
+	    match = *match_it;
+	    sorted_matches.erase(match_it);
+	    delete match;
+	}
+	peak = *peak_it;
+	peak_list.erase(peak_it);
+	delete peak;
     }
     bool has_peaks(){
 	return !peak_list.empty();
