@@ -12,7 +12,7 @@ class Match {
 public:
     Peaks::iterator one;
     Peaks::iterator two;
-}
+};
 
 class Peak {
 public:
@@ -20,7 +20,8 @@ public:
     int chromEnd;
     int track;
     std::list< SortedMatches::iterator > matches;
-}
+};
 
 int matched_diff(int*, int*, int*, int, int*, int*);
 
+#define ERROR_UNRECOGNIZED_PEAK_TRACK -1

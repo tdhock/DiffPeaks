@@ -1,4 +1,3 @@
-import()
-
+useDynLib(DiffPeaks)
 exportPattern("^[[:alpha:]]+")
 
