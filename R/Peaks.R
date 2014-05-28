@@ -7,6 +7,8 @@ matched_diff <- function(x, y){
       stopifnot(is.integer(df[, col.name]))
     }
   }
+  if(nrow(x)==0)return(y)
+  if(nrow(y)==0)return(x)
   df <-
     rbind(data.frame(x, track=1L),
           data.frame(y, track=2L))
