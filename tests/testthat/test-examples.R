@@ -37,3 +37,10 @@ test_that("one peak completely overlapped, other partially", {
                     22L,
                     25L)
 })
+
+test_that("several overlaps", {
+  expect_peaks_diff(Peaks(c(10, 100, 210, 230), c(20, 200, 220, 300)),
+                    Peaks(c(90, 120, 250, 400), c(110, 240, 300, 500)),
+                    c(10L, 90L, 210L, 400L),
+                    c(20L, 110L, 220L, 500L))
+})

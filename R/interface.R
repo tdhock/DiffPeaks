@@ -13,7 +13,6 @@ matched_diff_interface <- function(df){
        chromEnd=as.integer(df$chromEnd),
        PACKAGE="DiffPeaks")
   with(result, {
-    diff.df <- data.frame(chromStart, chromEnd)
-    diff.df[1:count,]
+    data.frame(chromStart, chromEnd)[1:count,]
   })
 }

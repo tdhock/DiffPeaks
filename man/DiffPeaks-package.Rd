@@ -13,7 +13,8 @@ Maintainer: \tab Toby Dylan Hocking <tdhock5@gmail.com>\cr
 Author: \tab Toby Dylan Hocking\cr
 Version: \tab 2014.5.27\cr
 License: \tab GPL-3\cr
-Title: \tab Compute the difference between two peak tracks by alignment\cr}
+Title: \tab Compute the difference between two peak tracks by alignment\cr
+Suggests: \tab testthat\cr}
 }
 \author{Toby Dylan Hocking}
 

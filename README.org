@@ -1,0 +1,10 @@
+DiffPeaks
+
+Compute the difference between two peak tracks by matching.
+
+#+BEGIN_SRC R
+install.packages("devtools")
+devtools::install_github("tdhock/DiffPeaks")
+library(DiffPeaks)
+example(matched_diff)
+#+END_SRC

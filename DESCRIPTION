@@ -5,7 +5,8 @@ Version: 2014.5.27
 License: GPL-3
 Title: Compute the difference between two peak tracks by alignment
 Description: Chromatin immunoprecipitation DNA sequencing results in genomic
- tracks that show enriched regions or peaks where proteins are bound. 
- This package implements fast C++ code that aligns two different peak tracks
- and outputs the differences.
-Suggests: testthat
+    tracks that show enriched regions or peaks where proteins are bound.
+    This package implements fast C++ code that aligns two different peak tracks
+    and outputs the differences.
+Suggests:
+    testthat, ggplot2
