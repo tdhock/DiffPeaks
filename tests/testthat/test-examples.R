@@ -10,6 +10,13 @@ expect_peaks_diff <- function(peaks1, peaks2, diff.chromStart, diff.chromEnd){
   }
 }
 
+test_that("two peaks, no overlap, two differences", {
+  expect_peaks_diff(Peaks(1, 5),
+                    Peaks(7, 10),
+                    c(1L, 7L),
+                    c(5L, 10L))
+})
+
 test_that("two differences and two matches", {
   expect_peaks_diff(Peaks(c(1, 11, 25), c(4, 20, 30)+1),
                     Peaks(c(6, 11, 21), c(10, 14, 30)+1),
