@@ -9,7 +9,7 @@ matched_diff <- function(x, y){
   }
   df <-
     rbind(data.frame(x, track=1L),
-          data.frame(x, track=2L))
+          data.frame(y, track=2L))
   df <- df[order(df$chromStart), ]
   matched_diff_interface(df)
 }

@@ -1,6 +1,7 @@
-/* -*- compile-command: "R CMD INSTALL .. && R CMD check .." -*- */
+/* -*- compile-command: "rm -f *.so *.o && R CMD INSTALL .. && R CMD check .." -*- */
 
 #include <R.h>
+#include <functional>
 #include "matched_diff.h"
 
 extern "C" {
@@ -26,6 +27,7 @@ matched_diff_interface
   if(diff_count_or_error < 0){
     error("undefined error code");
   }
+  *peak_count = diff_count_or_error;
 }
 
 }

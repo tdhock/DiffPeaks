@@ -1,5 +1,6 @@
-// #include <cstdio>
+ #include <cstdio>
 // #include <limits>
+//#include <iostream>
 #include "matched_diff.h"
 
 int
@@ -15,12 +16,11 @@ matched_diff
   Peak *peak;
   while(peak_i < peak_count) {
     peak_matches.init();
-    bool next_overlaps = 
-      peak_i < peak_count && 
-      peak_chromStart[peak_i] < peak_matches.get_chromEnd();
     // Add peaks and matches until there are no more overlapping
     // peaks.
-    while(peak_matches.get_chromEnd() == 0 || next_overlaps){
+    while(peak_matches.get_chromEnd() == 0 || 
+	  (peak_i < peak_count && 
+	   peak_chromStart[peak_i] < peak_matches.get_chromEnd())){
       peak = new Peak(peak_chromStart[peak_i], 
 		      peak_chromEnd[peak_i],
 		      peak_track[peak_i]);
@@ -38,6 +38,7 @@ matched_diff
       delete peak;
       diff_i++;
     }
+    //printf("overlap done diff_i=%d peak_i=%d\n", diff_i, peak_i);
   }
   
   // 249250621 for hg19:chr1.
